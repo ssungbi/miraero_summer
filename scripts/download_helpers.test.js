@@ -61,4 +61,6 @@ test('download plan injects dynamic Seoul date without fixed pageId', () => {
   assert.match(plan.evaluateFunction, /2026-07-01/);
   assert.match(plan.evaluateFunction, /2026-07-24/);
   assert.doesNotMatch(plan.evaluateFunction, /targetPageId\s*=\s*9/);
+  assert.match(plan.evaluateFunction, /healthInput\.value\.trim\(\) !== 'Y'/);
+  assert.match(plan.evaluateFunction, /HEALTH_Y_NOT_APPLIED/);
 });

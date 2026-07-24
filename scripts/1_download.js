@@ -92,18 +92,24 @@ function buildPageAutomationScript(dateRange) {
 
     const healthInput = document.querySelector('input[placeholder="건강보험(전략)"]');
     if (!healthInput) throw new Error('HEALTH_INPUT_MISSING');
-    const healthSelect = healthInput.closest('.el-select');
-    if (!healthSelect) throw new Error('HEALTH_SELECT_MISSING');
-    (healthSelect.querySelector('.el-input__wrapper, .el-select__wrapper, input') || healthSelect).click();
-    await sleep(500);
+    if (healthInput.value.trim() !== 'Y') {
+      const healthSelect = healthInput.closest('.el-select');
+      if (!healthSelect) throw new Error('HEALTH_SELECT_MISSING');
+      (healthSelect.querySelector('.el-input__wrapper, .el-select__wrapper, input') || healthSelect).click();
+      await sleep(500);
 
-    const poppers = Array.from(document.querySelectorAll('.el-popper, .el-select-dropdown')).filter(visible);
-    const targetPopper = poppers.find((item) => item.textContent.includes('Y') && item.textContent.includes('N'));
-    const yOption = targetPopper && Array.from(targetPopper.querySelectorAll('.el-select-dropdown__item, li, span'))
-      .find((element) => element.textContent.trim() === 'Y');
-    if (!yOption) throw new Error('HEALTH_Y_OPTION_MISSING');
-    yOption.click();
-    await sleep(500);
+      const poppers = Array.from(document.querySelectorAll('.el-popper, .el-select-dropdown')).filter(visible);
+      const targetPopper = poppers.find((item) => item.textContent.includes('Y') && item.textContent.includes('N'));
+      const yOption = targetPopper && Array.from(targetPopper.querySelectorAll('.el-select-dropdown__item, li, span'))
+        .find((element) => element.textContent.trim() === 'Y');
+      if (!yOption) throw new Error('HEALTH_Y_OPTION_MISSING');
+      yOption.click();
+      await sleep(500);
+    }
+    if (healthInput.value.trim() !== 'Y') {
+      throw new Error('HEALTH_Y_NOT_APPLIED:' + healthInput.value);
+    }
+    logs.push('건강보험(전략): Y');
 
     const searchButton = Array.from(document.querySelectorAll('button, .el-button'))
       .find((button) => button.textContent.trim() === '조회');
