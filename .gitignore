@@ -1,0 +1,6 @@
+node_modules/
+scripts/data.json
+index.html
+final_infographic.png
+__pycache__/
+*.pyc

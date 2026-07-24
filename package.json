@@ -1,9 +1,13 @@
 {
   "name": "miraero_summer_skill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Dependencies for Miraero Summer Infographic pipeline",
+  "scripts": {
+    "test": "node --test scripts/download_helpers.test.js",
+    "capture": "node scripts/4_capture.js"
+  },
   "dependencies": {
     "chrome-devtools-mcp": "^1.0.0",
-    "puppeteer": "^22.0.0"
+    "puppeteer-core": "^25.3.0"
   }
 }
